@@ -122,6 +122,42 @@ ul, ol { list-style: none; }
 }
 .hero-note { margin-top: 14px; font-size: .85rem; color: var(--ink-soft); }
 
+/* ---------- Quote form ---------- */
+.quote-form {
+  max-width: 560px; margin: 0 auto;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px; text-align: start;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .08);
+}
+.qf-grid { display: grid; gap: 14px; margin-bottom: 16px; }
+.qf-field { display: flex; flex-direction: column; gap: 6px; }
+.qf-field label {
+  font-weight: 800; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink);
+}
+.qf-field label small { font-weight: 600; color: var(--ink-soft); text-transform: none; letter-spacing: 0; }
+.qf-field input, .qf-field select {
+  font-family: inherit; font-size: 1rem; color: var(--ink);
+  background: var(--sand-deep); border: 1.5px solid transparent; border-radius: 10px;
+  padding: 13px 14px; width: 100%;
+  transition: border-color .15s ease, background .15s ease;
+  -webkit-appearance: none; appearance: none;
+}
+.qf-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%230b0b0b' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-size: 18px;
+  background-position: right 14px center;
+  padding-inline-end: 42px;
+}
+html[dir="rtl"] .qf-field select { background-position: left 14px center; }
+.qf-field input:focus, .qf-field select:focus {
+  outline: none; background: var(--paper); border-color: var(--ink);
+}
+.qf-field input::placeholder { color: #9a9a9a; }
+.qf-submit { width: 100%; }
+.qf-error { margin: -6px 0 12px; font-size: .85rem; font-weight: 700; color: #d33; }
+html[lang="ar"] .qf-field label { letter-spacing: 0; }
+
 /* Road divider under hero */
 .hero-road {
   position: absolute; inset-inline: 0; bottom: 46px; height: 0;
@@ -380,6 +416,8 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
 /* ---------- Tablet & up ---------- */
 @media (min-width: 640px) {
   .hero-badges { grid-template-columns: repeat(4, 1fr); }
+  .qf-grid { grid-template-columns: 1fr 1fr; }
+  .qf-field:nth-child(3), .qf-field:nth-child(4) { grid-column: 1 / -1; }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
   .footer-bottom { flex-direction: row; justify-content: space-between; }
   .truck-grid { grid-template-columns: repeat(2, 1fr); }

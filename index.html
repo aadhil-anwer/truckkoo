@@ -64,10 +64,44 @@
       <span class="ar">شاحنات عند الطلب للمنازل والشركات — سائقون موثّقون، أسعار شفافة، وحمولات حتى ٤٠ طناً. على بُعد رسالة واتساب واحدة.</span>
     </p>
     <div class="hero-cta reveal">
-      <a class="btn btn-wa btn-xl" href="https://wa.me/96875172824?text=Hi%20Truckkoo%2C%20I%20need%20a%20truck." target="_blank" rel="noopener">
-        <svg class="ico-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
-        <span class="en">Book on WhatsApp</span><span class="ar">احجز عبر واتساب</span>
-      </a>
+      <form class="quote-form" id="quoteForm" novalidate>
+        <div class="qf-grid">
+          <div class="qf-field">
+            <label for="qfFrom"><span class="en">Pickup from</span><span class="ar">من (موقع التحميل)</span></label>
+            <input type="text" id="qfFrom" name="from" required autocomplete="off"
+                   data-ph-en="e.g. Muscat" data-ph-ar="مثال: مسقط">
+          </div>
+          <div class="qf-field">
+            <label for="qfTo"><span class="en">Deliver to</span><span class="ar">إلى (موقع التسليم)</span></label>
+            <input type="text" id="qfTo" name="to" required autocomplete="off"
+                   data-ph-en="e.g. Salalah" data-ph-ar="مثال: صلالة">
+          </div>
+          <div class="qf-field">
+            <label for="qfGoods"><span class="en">Type of goods</span><span class="ar">نوع البضاعة</span></label>
+            <input type="text" id="qfGoods" name="goods" required autocomplete="off"
+                   data-ph-en="e.g. furniture, building materials" data-ph-ar="مثال: أثاث، مواد بناء">
+          </div>
+          <div class="qf-field">
+            <label for="qfTruck"><span class="en">Truck type <small>(optional)</small></span><span class="ar">نوع الشاحنة <small>(اختياري)</small></span></label>
+            <select id="qfTruck" name="truck">
+              <option value="" data-en="Not sure — advise me" data-ar="غير متأكد — انصحوني"></option>
+              <option value="pickup" data-en="Small pickup (1 ton)" data-ar="بيك أب صغير (١ طن)"></option>
+              <option value="hiup" data-en="Hi-up (3 tons)" data-ar="هاي أب (٣ طن)"></option>
+              <option value="10t" data-en="10-ton truck" data-ar="شاحنة ١٠ طن"></option>
+              <option value="20t" data-en="20-ton trailer" data-ar="تريلة ٢٠ طن"></option>
+              <option value="40t" data-en="Trailer — up to 40 tons" data-ar="تريلة — حتى ٤٠ طن"></option>
+            </select>
+          </div>
+        </div>
+        <p class="qf-error" id="qfError" hidden>
+          <span class="en">Please fill in pickup, delivery and goods.</span>
+          <span class="ar">يرجى تعبئة موقع التحميل والتسليم ونوع البضاعة.</span>
+        </p>
+        <button type="submit" class="btn btn-wa btn-xl qf-submit">
+          <svg class="ico-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
+          <span class="en">Get quote on WhatsApp</span><span class="ar">احصل على السعر عبر واتساب</span>
+        </button>
+      </form>
       <p class="hero-note">
         <span class="en">Replies in minutes · 7 days a week</span>
         <span class="ar">نرد خلال دقائق · طوال أيام الأسبوع</span>
