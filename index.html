@@ -68,12 +68,12 @@
         <div class="qf-grid">
           <div class="qf-field">
             <label for="qfFrom"><span class="en">Pickup from</span><span class="ar">من (موقع التحميل)</span></label>
-            <input type="text" id="qfFrom" name="from" required autocomplete="off"
+            <input type="text" id="qfFrom" name="from" required autocomplete="off" list="cityList"
                    data-ph-en="e.g. Muscat" data-ph-ar="مثال: مسقط">
           </div>
           <div class="qf-field">
             <label for="qfTo"><span class="en">Deliver to</span><span class="ar">إلى (موقع التسليم)</span></label>
-            <input type="text" id="qfTo" name="to" required autocomplete="off"
+            <input type="text" id="qfTo" name="to" required autocomplete="off" list="cityList"
                    data-ph-en="e.g. Salalah" data-ph-ar="مثال: صلالة">
           </div>
           <div class="qf-field">
@@ -93,6 +93,7 @@
             </select>
           </div>
         </div>
+        <datalist id="cityList"></datalist>
         <p class="qf-error" id="qfError" hidden>
           <span class="en">Please fill in pickup, delivery and goods.</span>
           <span class="ar">يرجى تعبئة موقع التحميل والتسليم ونوع البضاعة.</span>

@@ -4,7 +4,51 @@
   var html = document.documentElement;
   var WA_NUMBER = "96875172824";
 
+  // Cities and towns along our corridors. Suggestions only —
+  // the inputs accept any free-typed location.
+  var CITIES = [
+    // Muscat governorate
+    ["Muscat", "مسقط"], ["Muttrah", "مطرح"], ["Seeb", "السيب"],
+    ["Bawshar", "بوشر"], ["Al Amerat", "العامرات"], ["Qurayyat", "قريات"],
+    // Batinah coast (Muscat - Sohar corridor)
+    ["Barka", "بركاء"], ["Al Musanaah", "المصنعة"], ["Suwaiq", "السويق"],
+    ["Al Khaburah", "الخابورة"], ["Saham", "صحم"], ["Sohar", "صحار"],
+    ["Liwa", "لوى"], ["Shinas", "شناص"], ["Rustaq", "الرستاق"],
+    // Interior and Dhahirah
+    ["Nizwa", "نزوى"], ["Bahla", "بهلاء"], ["Samail", "سمائل"],
+    ["Bidbid", "بدبد"], ["Izki", "إزكي"], ["Adam", "أدم"],
+    ["Ibri", "عبري"], ["Buraimi", "البريمي"],
+    // Sharqiyah
+    ["Sur", "صور"], ["Ibra", "إبراء"], ["Sinaw", "سناو"],
+    ["Al Mudhaibi", "المضيبي"], ["Al Kamil Wal Wafi", "الكامل والوافي"],
+    // Wusta and Dhofar (Salalah corridor)
+    ["Haima", "هيماء"], ["Duqm", "الدقم"], ["Thumrait", "ثمريت"],
+    ["Salalah", "صلالة"], ["Taqah", "طاقة"], ["Mirbat", "مرباط"],
+    // Musandam
+    ["Khasab", "خصب"],
+    // UAE
+    ["Dubai", "دبي"], ["Jebel Ali", "جبل علي"], ["Abu Dhabi", "أبوظبي"],
+    ["Sharjah", "الشارقة"], ["Ajman", "عجمان"], ["Al Ain", "العين"],
+    ["Ras Al Khaimah", "رأس الخيمة"], ["Fujairah", "الفجيرة"],
+    // Saudi Arabia
+    ["Riyadh", "الرياض"], ["Dammam", "الدمام"], ["Jeddah", "جدة"]
+  ];
+
+  function populateCities(lang) {
+    var dl = document.getElementById("cityList");
+    if (!dl) return;
+    dl.innerHTML = "";
+    CITIES.forEach(function (city) {
+      var opt = document.createElement("option");
+      opt.value = lang === "ar" ? city[1] : city[0];
+      // Show the other language as a hint so both scripts are searchable
+      opt.label = lang === "ar" ? city[0] : city[1];
+      dl.appendChild(opt);
+    });
+  }
+
   function localizeForm(lang) {
+    populateCities(lang);
     document.querySelectorAll("[data-ph-en]").forEach(function (el) {
       el.placeholder = lang === "ar" ? el.getAttribute("data-ph-ar") : el.getAttribute("data-ph-en");
     });
