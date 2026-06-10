@@ -163,22 +163,26 @@ html[lang="ar"] .qf-field label { letter-spacing: 0; }
 /* Road strip with driving truck (in flow, right under hero content) */
 .road-strip {
   position: relative;
-  height: 76px;
+  height: clamp(86px, 12vw, 112px);
   border-bottom: 3px dashed rgba(0, 0, 0, .12);
   overflow: hidden;
   pointer-events: none;
 }
 .truck-svg {
-  position: absolute; bottom: 5px; left: 0;
-  width: 200px; height: auto;
-  transform: translateX(110vw);
+  position: absolute; bottom: 4px; left: 0;
+  width: clamp(250px, 36vw, 340px); height: auto;
+  transform: translateX(105vw);
   animation: drive 16s linear infinite;
-  will-change: transform;
 }
 @keyframes drive {
-  from { transform: translateX(110vw); }
-  to   { transform: translateX(-260px); }
+  from { transform: translateX(105vw); }
+  to   { transform: translateX(-360px); }
 }
+.truck-svg .wheel {
+  animation: roll .9s linear infinite;
+  transform-box: fill-box; transform-origin: center;
+}
+@keyframes roll { to { transform: rotate(-360deg); } }
 
 /* Marquee strip */
 .hero-strip {
@@ -349,7 +353,8 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .strip-track { animation: none; }
   .wa-float::after { animation: none; }
-  .truck-svg { animation: none; transform: translateX(8vw); }
+  .truck-svg { animation-duration: 60s; }
+  .truck-svg .wheel { animation: none; }
   html { scroll-behavior: auto; }
 }
 
