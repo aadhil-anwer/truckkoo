@@ -189,36 +189,6 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
 .service h3 { font-size: 1.12rem; font-weight: 800; color: #fff; }
 .service p { font-size: .94rem; color: #a3a3a3; }
 
-/* ---------- Routes ---------- */
-.route-grid { display: grid; gap: 14px; margin-top: 30px; }
-.route-card {
-  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 20px 22px; box-shadow: var(--shadow);
-  border-inline-start: 4px solid var(--orange);
-  transition: transform .2s ease;
-}
-.route-card:hover { transform: translateY(-3px); }
-.route-card-border { border-inline-start-color: var(--asphalt); }
-.route-tag {
-  display: inline-block; font-size: .68rem; font-weight: 800;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--orange); background: var(--orange-soft);
-  border-radius: 6px; padding: 4px 12px; margin-bottom: 12px;
-}
-.route-card-border .route-tag { color: var(--sand); background: var(--asphalt); }
-.route-line { display: flex; align-items: center; gap: 12px; font-size: 1.08rem; }
-.route-line strong { font-weight: 800; white-space: nowrap; }
-.route-dots {
-  flex: 1; height: 0; min-width: 30px;
-  border-top: 3px dotted rgba(0, 0, 0, .25);
-  position: relative;
-}
-.route-dots::after {
-  content: "›"; position: absolute; inset-inline-end: -4px; top: -14px;
-  color: var(--orange); font-weight: 900; font-size: 1.1rem;
-}
-html[dir="rtl"] .route-dots::after { content: "‹"; }
-
 /* ---------- Truck Types ---------- */
 .truck-grid { display: grid; gap: 14px; margin-top: 30px; }
 .truck-card {
@@ -362,17 +332,6 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 .badge-ico { color: var(--orange); flex: none; display: grid; place-items: center; }
 .badge-ico svg { width: 22px; height: 22px; }
 
-/* ---------- Route meta ---------- */
-.route-meta {
-  margin-top: 10px; font-size: .82rem; font-weight: 600; color: var(--ink-soft);
-  display: flex; align-items: center; gap: 8px;
-}
-.route-meta::before {
-  content: ""; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--orange); flex: none;
-}
-.route-card-border .route-meta::before { background: var(--asphalt); }
-
 /* ---------- FAQ ---------- */
 .faq-list { margin-top: 30px; max-width: 720px; }
 .faq-item { border-bottom: 1px solid var(--asphalt-line); }
@@ -423,7 +382,6 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
   .hero-badges { grid-template-columns: repeat(4, 1fr); }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
   .footer-bottom { flex-direction: row; justify-content: space-between; }
-  .route-grid { grid-template-columns: repeat(2, 1fr); }
   .truck-grid { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: repeat(3, 1fr); }
   .btn-header .en, html[lang="en"] .btn-header .ar { display: none; }
@@ -438,8 +396,6 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
   .hero-inner { padding-bottom: 120px; }
   .hero-road { bottom: 64px; }
   .truck-grid { grid-template-columns: repeat(3, 1fr); }
-  .route-grid { grid-template-columns: repeat(2, 1fr); }
-  .route-card:last-child { grid-column: 1 / -1; }
   .why-list { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
   .why-list li:last-child { grid-column: 1 / -1; justify-self: start; min-width: 48%; }
   .site-footer { padding-bottom: 56px; }
