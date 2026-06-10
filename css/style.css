@@ -74,13 +74,9 @@ ul, ol { list-style: none; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--orange); }
-.brand-truck { width: 34px; height: 24px; }
-.brand-word {
-  font-weight: 900; font-style: italic; font-size: 1.35rem;
-  letter-spacing: -0.5px; text-transform: lowercase;
-}
-.brand-word::first-letter { text-transform: uppercase; }
+.brand { display: inline-flex; align-items: center; }
+.brand-logo { height: 30px; width: auto; }
+.brand-logo-footer { height: 52px; }
 .header-actions { display: flex; align-items: center; gap: 10px; }
 .lang-toggle {
   font-family: var(--font-arabic); font-weight: 700; font-size: .95rem;
@@ -95,32 +91,38 @@ ul, ol { list-style: none; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  padding: 72px 0 0;
   background:
     radial-gradient(900px 480px at 85% -10%, var(--orange-soft) 0%, transparent 60%),
     var(--sand);
   overflow: hidden;
 }
-.hero-inner { position: relative; z-index: 2; text-align: center; padding-bottom: 86px; }
+.hero-inner {
+  position: relative; z-index: 2; text-align: center;
+  min-height: calc(100svh - 140px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding-block: 16px 24px;
+}
+.hero-below { position: relative; z-index: 2; }
 .hero-kicker {
   display: inline-flex; align-items: center; gap: 10px;
   font-weight: 800; font-size: .78rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--ink-soft); margin-bottom: 26px;
+  color: var(--ink-soft); margin-bottom: 18px;
 }
 .hero-kicker::before {
   content: ""; width: 26px; height: 3px; background: var(--orange); flex: none;
 }
 .hero-title {
-  font-size: clamp(2.5rem, 9vw, 4.6rem);
+  font-size: clamp(2rem, 7.4vw, 4.2rem);
   font-weight: 900; line-height: 1.04; letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 .hero-title em { font-style: italic; color: var(--orange); }
 .hero-sub {
-  font-size: 1.06rem; color: var(--ink-soft); max-width: 520px;
-  margin: 0 auto 34px;
+  font-size: .98rem; color: var(--ink-soft); max-width: 520px;
+  margin: 0 auto 22px;
 }
-.hero-note { margin-top: 14px; font-size: .85rem; color: var(--ink-soft); }
+.hero-note { margin-top: 12px; font-size: .85rem; color: var(--ink-soft); }
+.hero-cta { width: 100%; }
 
 /* ---------- Quote form ---------- */
 .quote-form {
@@ -158,11 +160,24 @@ html[dir="rtl"] .qf-field select { background-position: left 14px center; }
 .qf-error { margin: -6px 0 12px; font-size: .85rem; font-weight: 700; color: #d33; }
 html[lang="ar"] .qf-field label { letter-spacing: 0; }
 
-/* Road divider under hero */
-.hero-road {
-  position: absolute; inset-inline: 0; bottom: 46px; height: 0;
-  border-top: 3px dashed rgba(0, 0, 0, .12);
-  z-index: 1;
+/* Road strip with driving truck (in flow, right under hero content) */
+.road-strip {
+  position: relative;
+  height: 76px;
+  border-bottom: 3px dashed rgba(0, 0, 0, .12);
+  overflow: hidden;
+  pointer-events: none;
+}
+.truck-svg {
+  position: absolute; bottom: 5px; left: 0;
+  width: 200px; height: auto;
+  transform: translateX(110vw);
+  animation: drive 16s linear infinite;
+  will-change: transform;
+}
+@keyframes drive {
+  from { transform: translateX(110vw); }
+  to   { transform: translateX(-260px); }
 }
 
 /* Marquee strip */
@@ -298,7 +313,6 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
 /* ---------- Footer ---------- */
 .site-footer { background: var(--asphalt); color: var(--sand); padding: 56px 0 96px; }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.brand-footer .brand-word { font-size: 1.5rem; }
 .footer-slogan { font-size: .95rem; color: #a3a3a3; }
 .footer-links { display: flex; gap: 22px; margin-top: 6px; }
 .footer-links a { font-weight: 700; font-size: .92rem; color: var(--sand); transition: color .18s ease; }
@@ -335,6 +349,7 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .strip-track { animation: none; }
   .wa-float::after { animation: none; }
+  .truck-svg { animation: none; transform: translateX(8vw); }
   html { scroll-behavior: auto; }
 }
 
@@ -354,10 +369,9 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
 
 /* ---------- Hero trust badges ---------- */
 .hero-badges {
-  position: relative; z-index: 2;
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
   max-width: 720px; margin: 0 auto;
-  padding: 0 0 64px;
+  padding: 32px 22px 56px;
 }
 .hero-badges li {
   display: flex; align-items: center; gap: 10px;
@@ -430,9 +444,8 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   .main-nav { display: flex; }
   .site-header { padding: 14px 28px; }
   .section { padding: 110px 0; }
-  .hero { padding-top: 110px; }
-  .hero-inner { padding-bottom: 120px; }
-  .hero-road { bottom: 64px; }
+  .hero-inner { min-height: calc(100svh - 144px); padding-block: 24px 28px; }
+  .hero-badges { padding-bottom: 70px; }
   .truck-grid { grid-template-columns: repeat(3, 1fr); }
   .why-list { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
   .why-list li:last-child { grid-column: 1 / -1; justify-self: start; min-width: 48%; }
