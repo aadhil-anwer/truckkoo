@@ -6,20 +6,21 @@
 :root {
   --orange: #f1551f;
   --orange-deep: #d9430f;
-  --orange-soft: #fde8df;
-  --sand: #faf6f0;
-  --sand-deep: #f3ecdf;
-  --ink: #181410;
-  --ink-soft: #5c554d;
-  --asphalt: #16130f;
-  --asphalt-2: #211c16;
-  --asphalt-line: #322a21;
+  --orange-soft: #feeee7;
+  --sand: #ffffff;
+  --sand-deep: #f6f6f6;
+  --ink: #0b0b0b;
+  --ink-soft: #6b6b6b;
+  --line: #e8e8e8;
+  --asphalt: #0b0b0b;
+  --asphalt-2: #161616;
+  --asphalt-line: #2c2c2c;
   --paper: #ffffff;
   --wa: #1fa855;
   --font-latin: "Archivo", sans-serif;
   --font-arabic: "Almarai", sans-serif;
-  --radius: 14px;
-  --shadow: 0 10px 30px rgba(24, 16, 8, 0.10);
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 4px 14px rgba(0, 0, 0, .05);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,13 +54,13 @@ ul, ol { list-style: none; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   font-family: inherit; font-weight: 800; font-size: 1rem;
-  padding: 14px 26px; border-radius: 999px; border: none; cursor: pointer;
+  padding: 14px 26px; border-radius: 10px; border: none; cursor: pointer;
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
 .btn:active { transform: scale(.97); }
-.btn-wa { background: var(--wa); color: #fff; box-shadow: 0 8px 24px rgba(31, 168, 85, .35); }
+.btn-wa { background: var(--wa); color: #fff; box-shadow: 0 4px 14px rgba(31, 168, 85, .25); }
 .btn-wa:hover { background: #178f47; transform: translateY(-2px); }
-.btn-dark { background: var(--asphalt); color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .25); }
+.btn-dark { background: var(--asphalt); color: #fff; box-shadow: 0 4px 14px rgba(0, 0, 0, .2); }
 .btn-dark:hover { background: #000; transform: translateY(-2px); }
 .btn-xl { font-size: 1.1rem; padding: 18px 34px; }
 .ico-wa { width: 22px; height: 22px; flex: none; }
@@ -69,9 +70,9 @@ ul, ol { list-style: none; }
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 18px;
-  background: rgba(250, 246, 240, .92);
+  background: rgba(255, 255, 255, .94);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(24, 16, 8, .08);
+  border-bottom: 1px solid var(--line);
 }
 .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--orange); }
 .brand-truck { width: 34px; height: 24px; }
@@ -84,7 +85,7 @@ ul, ol { list-style: none; }
 .lang-toggle {
   font-family: var(--font-arabic); font-weight: 700; font-size: .95rem;
   background: transparent; color: var(--ink);
-  border: 1.5px solid rgba(24, 16, 8, .25); border-radius: 999px;
+  border: 1.5px solid #d4d4d4; border-radius: 8px;
   padding: 8px 16px; cursor: pointer; transition: all .18s ease;
 }
 .lang-toggle:hover { border-color: var(--orange); color: var(--orange); }
@@ -102,11 +103,12 @@ ul, ol { list-style: none; }
 }
 .hero-inner { position: relative; z-index: 2; text-align: center; padding-bottom: 86px; }
 .hero-kicker {
-  display: inline-block;
+  display: inline-flex; align-items: center; gap: 10px;
   font-weight: 800; font-size: .78rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--orange);
-  border: 1.5px solid var(--orange); border-radius: 999px;
-  padding: 7px 16px; margin-bottom: 26px;
+  color: var(--ink-soft); margin-bottom: 26px;
+}
+.hero-kicker::before {
+  content: ""; width: 26px; height: 3px; background: var(--orange); flex: none;
 }
 .hero-title {
   font-size: clamp(2.5rem, 9vw, 4.6rem);
@@ -123,7 +125,7 @@ ul, ol { list-style: none; }
 /* Road divider under hero */
 .hero-road {
   position: absolute; inset-inline: 0; bottom: 46px; height: 0;
-  border-top: 3px dashed rgba(24, 16, 8, .15);
+  border-top: 3px dashed rgba(0, 0, 0, .12);
   z-index: 1;
 }
 
@@ -162,8 +164,8 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
 .lead { font-size: 1.06rem; color: var(--ink-soft); max-width: 640px; margin-bottom: 44px; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 640px; }
 .stat {
-  background: var(--paper); border-radius: var(--radius);
-  padding: 20px 14px; text-align: center; box-shadow: var(--shadow);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px 14px; text-align: center;
   display: flex; flex-direction: column; gap: 2px;
 }
 .stat strong { font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 900; color: var(--orange); }
@@ -185,12 +187,12 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   margin-top: 2px;
 }
 .service h3 { font-size: 1.12rem; font-weight: 800; color: #fff; }
-.service p { font-size: .94rem; color: #a89e92; }
+.service p { font-size: .94rem; color: #a3a3a3; }
 
 /* ---------- Routes ---------- */
 .route-grid { display: grid; gap: 14px; margin-top: 30px; }
 .route-card {
-  background: var(--paper); border-radius: var(--radius);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 20px 22px; box-shadow: var(--shadow);
   border-inline-start: 4px solid var(--orange);
   transition: transform .2s ease;
@@ -201,14 +203,14 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   display: inline-block; font-size: .68rem; font-weight: 800;
   letter-spacing: .14em; text-transform: uppercase;
   color: var(--orange); background: var(--orange-soft);
-  border-radius: 999px; padding: 4px 12px; margin-bottom: 12px;
+  border-radius: 6px; padding: 4px 12px; margin-bottom: 12px;
 }
 .route-card-border .route-tag { color: var(--sand); background: var(--asphalt); }
 .route-line { display: flex; align-items: center; gap: 12px; font-size: 1.08rem; }
 .route-line strong { font-weight: 800; white-space: nowrap; }
 .route-dots {
   flex: 1; height: 0; min-width: 30px;
-  border-top: 3px dotted rgba(24, 16, 8, .3);
+  border-top: 3px dotted rgba(0, 0, 0, .25);
   position: relative;
 }
 .route-dots::after {
@@ -232,7 +234,7 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 }
 .truck-tons small { font-size: .8rem; font-weight: 700; color: var(--orange); letter-spacing: .08em; }
 .truck-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--sand); margin-bottom: 6px; }
-.truck-card p { font-size: .9rem; color: #a89e92; }
+.truck-card p { font-size: .9rem; color: #a3a3a3; }
 .truck-card-cta {
   display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 16px;
   background: transparent; border: 2px dashed var(--asphalt-line);
@@ -243,7 +245,7 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 .steps { display: grid; gap: 18px; margin-top: 34px; counter-reset: step; position: relative; }
 .step {
   position: relative;
-  background: var(--paper); border-radius: var(--radius);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 26px 22px 26px; box-shadow: var(--shadow);
 }
 .step-num {
@@ -262,9 +264,8 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 .why-list { display: grid; gap: 12px; margin-top: 30px; max-width: 560px; }
 .why-list li {
   display: flex; align-items: center; gap: 14px;
-  background: var(--paper); border-radius: 999px;
-  padding: 14px 22px; font-weight: 700; font-size: 1rem;
-  box-shadow: var(--shadow);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 20px; font-weight: 700; font-size: 1rem;
 }
 .check {
   display: grid; place-items: center; flex: none;
@@ -292,11 +293,11 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 .site-footer { background: var(--asphalt); color: var(--sand); padding: 56px 0 96px; }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .brand-footer .brand-word { font-size: 1.5rem; }
-.footer-slogan { font-size: .95rem; color: #a89e92; }
+.footer-slogan { font-size: .95rem; color: #a3a3a3; }
 .footer-links { display: flex; gap: 22px; margin-top: 6px; }
 .footer-links a { font-weight: 700; font-size: .92rem; color: var(--sand); transition: color .18s ease; }
 .footer-links a:hover { color: var(--orange); }
-.footer-copy { margin-top: 18px; font-size: .8rem; color: #7d746a; }
+.footer-copy { margin-top: 18px; font-size: .8rem; color: #8a8a8a; }
 
 /* ---------- Floating WhatsApp ---------- */
 .wa-float {
@@ -354,10 +355,9 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 }
 .hero-badges li {
   display: flex; align-items: center; gap: 10px;
-  background: var(--paper); border: 1px solid rgba(24, 16, 8, .08);
-  border-radius: 12px; padding: 12px 14px;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 14px;
   font-weight: 700; font-size: .82rem;
-  box-shadow: 0 4px 14px rgba(24, 16, 8, .06);
 }
 .badge-ico { color: var(--orange); flex: none; display: grid; place-items: center; }
 .badge-ico svg { width: 22px; height: 22px; }
@@ -393,7 +393,7 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
 .faq-plus::before { inset-inline: 0; top: 8px; height: 2px; }
 .faq-plus::after { inset-block: 0; inset-inline-start: 8px; width: 2px; }
 .faq-item[open] .faq-plus::after { transform: scaleY(0); }
-.faq-item p { padding: 0 0 22px; font-size: .96rem; color: #a89e92; max-width: 600px; }
+.faq-item p { padding: 0 0 22px; font-size: .96rem; color: #a3a3a3; max-width: 600px; }
 
 /* ---------- Corporate footer ---------- */
 .footer-grid {
@@ -405,17 +405,17 @@ html[dir="rtl"] .route-dots::after { content: "‹"; }
   color: var(--orange); margin-bottom: 16px;
 }
 .footer-col ul { display: grid; gap: 10px; }
-.footer-col ul a, .footer-plain { font-size: .92rem; color: #c9c0b4; }
+.footer-col ul a, .footer-plain { font-size: .92rem; color: #c6c6c6; }
 .footer-col ul a { transition: color .18s ease; }
 .footer-col ul a:hover { color: var(--orange); }
 .footer-col-brand .brand { margin-bottom: 12px; }
 .footer-slogan { font-size: .95rem; font-weight: 700; color: var(--sand); margin-bottom: 10px; }
-.footer-desc { font-size: .88rem; color: #a89e92; max-width: 300px; }
+.footer-desc { font-size: .88rem; color: #a3a3a3; max-width: 300px; }
 .footer-bottom {
   display: flex; flex-direction: column; gap: 6px; align-items: center;
   padding-top: 24px; text-align: center;
 }
-.footer-copy { font-size: .8rem; color: #7d746a; }
+.footer-copy { font-size: .8rem; color: #8a8a8a; }
 .footer-tag { font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
 
 /* ---------- Tablet & up ---------- */
