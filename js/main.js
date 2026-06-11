@@ -109,9 +109,25 @@
             + "Goods: " + goods;
         if (truck) msg += "\nTruck type: " + truck;
       }
+      track("quote_form_submit", { from_city: from, to_city: to, truck_type: truck || "unspecified" });
       window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
     });
   }
+
+  // Analytics: count WhatsApp link clicks by location on the page
+  function track(eventName, params) {
+    if (typeof window.gtag === "function") window.gtag("event", eventName, params || {});
+  }
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="https://wa.me/"]');
+    if (!link) return;
+    var source = link.classList.contains("wa-float") ? "floating_button"
+               : link.classList.contains("btn-header") ? "header"
+               : link.closest("footer") ? "footer"
+               : link.closest(".contact") ? "contact_section"
+               : "page_button";
+    track("whatsapp_click", { source: source, lang: html.lang });
+  });
 
   // Scroll reveal
   var revealed = document.querySelectorAll(".reveal");
