@@ -66,7 +66,12 @@
 
   var saved = null;
   try { saved = localStorage.getItem("truckkoo-lang"); } catch (e) {}
-  setLang(saved === "ar" ? "ar" : "en");
+  if (saved === "ar" || saved === "en") {
+    setLang(saved);
+  } else {
+    var sysLang = (navigator.language || "").toLowerCase();
+    setLang(sysLang.indexOf("ar") === 0 ? "ar" : "en");
+  }
 
   document.getElementById("langToggle").addEventListener("click", function () {
     setLang(html.lang === "ar" ? "en" : "ar");

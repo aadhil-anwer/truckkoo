@@ -172,7 +172,7 @@ html[lang="ar"] .qf-field label { letter-spacing: 0; }
   position: absolute; bottom: 4px; left: 0;
   width: clamp(250px, 36vw, 340px); height: auto;
   transform: translateX(105vw);
-  animation: drive 16s linear infinite;
+  animation: drive 8s linear infinite;
 }
 @keyframes drive {
   from { transform: translateX(105vw); }
