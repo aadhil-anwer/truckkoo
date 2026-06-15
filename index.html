@@ -10,6 +10,13 @@
 <meta property="og:image" content="images/logo.jpg">
 <meta name="theme-color" content="#13100D">
 <link rel="icon" href="images/logo.jpg">
+<!-- PWA / Add to Home Screen -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Truckkoo">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,800;0,900;1,800;1,900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
@@ -345,6 +352,29 @@
 <a class="wa-float" href="https://wa.me/96875172824?text=Hi%20Truckkoo%2C%20I%20need%20a%20truck." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
 </a>
+
+<!-- Add to Home Screen prompt (homepage only) -->
+<div class="a2hs" id="installBanner" role="dialog" aria-label="Install the Truckkoo app" hidden>
+  <button class="a2hs-close" id="installClose" type="button" aria-label="Dismiss">&times;</button>
+  <img class="a2hs-icon" src="images/icon-192.png" alt="" width="46" height="46">
+  <div class="a2hs-body">
+    <strong>
+      <span class="en">Add Truckkoo to your Home Screen</span>
+      <span class="ar">أضف تركو إلى الشاشة الرئيسية</span>
+    </strong>
+    <span class="a2hs-sub">
+      <span class="en">Book trucks in one tap — works offline.</span>
+      <span class="ar">احجز الشاحنات بنقرة واحدة — يعمل دون اتصال.</span>
+    </span>
+    <span class="a2hs-ios" id="installIos">
+      <span class="en">Tap <svg class="a2hs-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l4 4m-4-4L8 7m4-4v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> then <b>Add to Home Screen</b></span>
+      <span class="ar">اضغط <svg class="a2hs-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l4 4m-4-4L8 7m4-4v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ثم <b>إضافة إلى الشاشة الرئيسية</b></span>
+    </span>
+  </div>
+  <button class="a2hs-btn" id="installBtn" type="button">
+    <span class="en">Add</span><span class="ar">إضافة</span>
+  </button>
+</div>
 
 <script src="js/main.js"></script>
 </body>

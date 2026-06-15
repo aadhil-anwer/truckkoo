@@ -345,6 +345,53 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   100% { transform: scale(1.55); opacity: 0; }
 }
 
+/* ---------- Add to Home Screen banner ---------- */
+.a2hs {
+  position: fixed; z-index: 70;
+  inset-inline: 12px; bottom: 14px; margin-inline: auto;
+  max-width: 440px;
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 14px;
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .18);
+  transform: translateY(140%); opacity: 0;
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .35s ease;
+}
+.a2hs.show { transform: translateY(0); opacity: 1; }
+.a2hs-icon { flex: none; width: 46px; height: 46px; border-radius: 11px; background: #fff; border: 1px solid var(--line); box-shadow: 0 2px 6px rgba(0, 0, 0, .08); }
+.a2hs-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.a2hs-body strong { font-size: .98rem; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.a2hs-sub { font-size: .82rem; color: var(--ink-soft); }
+.a2hs-ios { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; display: none; }
+.a2hs-ios b { color: var(--ink); font-weight: 700; }
+.a2hs-share { width: 15px; height: 15px; vertical-align: -3px; color: #0a84ff; }
+.a2hs-btn {
+  flex: none; font-family: inherit; font-weight: 800; font-size: .92rem;
+  padding: 11px 20px; border-radius: 10px; border: none; cursor: pointer;
+  background: var(--orange); color: #fff; min-height: 44px;
+  box-shadow: 0 4px 14px rgba(243, 124, 36, .35);
+  transition: transform .15s ease, background .15s ease;
+}
+.a2hs-btn:hover { background: #e06a18; transform: translateY(-1px); }
+.a2hs-btn:active { transform: scale(.97); }
+.a2hs-close {
+  position: absolute; top: -10px; inset-inline-end: -10px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--ink); color: #fff; border: 2px solid #fff;
+  font-size: 18px; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+}
+/* iOS mode: show step hint, hide the (non-functional on iOS) Add button */
+.a2hs.is-ios .a2hs-ios { display: block; }
+.a2hs.is-ios .a2hs-btn { display: none; }
+.a2hs.is-ios .a2hs-sub { display: none; }
+/* Lift the WhatsApp float above the banner while it's visible */
+body.has-a2hs .wa-float { bottom: 92px; transition: bottom .35s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .a2hs { transition: opacity .2s ease; transform: none; }
+  body.has-a2hs .wa-float { transition: none; }
+}
+
 /* ---------- Scroll reveal ---------- */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in { opacity: 1; transform: none; }

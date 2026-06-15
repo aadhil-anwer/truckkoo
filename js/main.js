@@ -182,3 +182,112 @@
     revealed.forEach(function (el) { el.classList.add("in"); });
   }
 })();
+
+// Register service worker for PWA / offline support (Add to Home Screen).
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+
+// Add-to-Home-Screen banner (homepage only; element absent elsewhere).
+(function () {
+  var banner = document.getElementById("installBanner");
+  if (!banner) return;
+
+  // Never show if the site is already running as an installed app.
+  var standalone =
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+    window.navigator.standalone === true;
+  if (standalone) return;
+
+  var KEY = "truckkoo-a2hs";
+  var COOLDOWN = 14 * 24 * 60 * 60 * 1000; // re-ask at most every 14 days
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved === "installed") return;
+    if (saved && Date.now() - parseInt(saved, 10) < COOLDOWN) return;
+  } catch (e) {}
+
+  var ua = window.navigator.userAgent || "";
+  var isIOS = /iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && "ontouchend" in document);
+  var deferredPrompt = null;
+  var eligible = false;
+  var shown = false;
+
+  function remember(val) { try { localStorage.setItem(KEY, val); } catch (e) {} }
+  function track(name) { if (typeof gtag === "function") { try { gtag("event", name); } catch (e) {} } }
+
+  function reveal() {
+    if (shown || !eligible) return;
+    shown = true;
+    banner.hidden = false;
+    requestAnimationFrame(function () {
+      document.body.classList.add("has-a2hs");
+      banner.classList.add("show");
+    });
+    track("a2hs_shown");
+  }
+
+  function hide(rememberVal) {
+    banner.classList.remove("show");
+    document.body.classList.remove("has-a2hs");
+    if (rememberVal) remember(rememberVal);
+    setTimeout(function () { banner.hidden = true; }, 360);
+  }
+
+  // Respect the user journey: surface only after they've engaged with the page
+  // (scrolled past the hero) or after a short dwell — never on first paint.
+  function armReveal() {
+    var onScroll = function () {
+      if (window.pageYOffset > 500) {
+        window.removeEventListener("scroll", onScroll);
+        reveal();
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    setTimeout(reveal, 6500);
+  }
+
+  if (isIOS) {
+    // iOS Safari has no install prompt API — guide the user instead.
+    banner.classList.add("is-ios");
+    eligible = true;
+    armReveal();
+  } else {
+    // Android / desktop Chrome: capture the native prompt and trigger it on tap.
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      eligible = true;
+      armReveal();
+    });
+  }
+
+  var installBtn = document.getElementById("installBtn");
+  if (installBtn) {
+    installBtn.addEventListener("click", function () {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (choice) {
+        var accepted = choice && choice.outcome === "accepted";
+        track(accepted ? "a2hs_installed" : "a2hs_declined");
+        hide(accepted ? "installed" : String(Date.now()));
+      });
+      deferredPrompt = null;
+    });
+  }
+
+  var closeBtn = document.getElementById("installClose");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function () {
+      track("a2hs_dismissed");
+      hide(String(Date.now()));
+    });
+  }
+
+  window.addEventListener("appinstalled", function () {
+    track("a2hs_installed");
+    hide("installed");
+  });
+})();
