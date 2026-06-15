@@ -155,7 +155,8 @@ html[dir="rtl"] .qf-field select { background-position: left 14px center; }
 .qf-field input:focus, .qf-field select:focus {
   outline: none; background: var(--paper); border-color: var(--ink);
 }
-.qf-field input::placeholder { color: #9a9a9a; }
+/* Placeholder must clear 4.5:1 on the --sand-deep field bg (WCAG 1.4.3) */
+.qf-field input::placeholder { color: #6b6b6b; opacity: 1; }
 .qf-submit { width: 100%; }
 .qf-error { margin: -6px 0 12px; font-size: .85rem; font-weight: 700; color: #d33; }
 html[lang="ar"] .qf-field label { letter-spacing: 0; }
@@ -178,6 +179,11 @@ html[lang="ar"] .qf-field label { letter-spacing: 0; }
   from { transform: translateX(105vw); }
   to   { transform: translateX(-360px); }
 }
+/* The truck crosses a shorter distance on narrow screens, so a fixed
+   duration makes it crawl. Shorten the loop on smaller viewports to keep
+   the perceived speed (~px per second) roughly constant. */
+@media (max-width: 900px) { .truck-svg { animation-duration: 6s; } }
+@media (max-width: 640px) { .truck-svg { animation-duration: 4s; } }
 .truck-svg .wheel {
   animation: roll .9s linear infinite;
   transform-box: fill-box; transform-origin: center;
@@ -796,4 +802,116 @@ html[lang="ar"] .vm-card .vm-label { letter-spacing: 0; }
   .lang-toggle { padding: 8px 11px; font-size: .88rem; }
   .btn-header { padding: 10px 12px; }
   .container { padding-inline: 16px; }
+}
+
+/* ============================================================
+   Photographic bands — real trucks, ports and warehouses.
+   Credibility through imagery (a logistics brand earns trust by
+   showing the work). Asphalt veil keeps the orange/ink identity
+   intact and guarantees ≥4.5:1 for any text laid over the photo.
+   ============================================================ */
+.media-band {
+  position: relative; overflow: hidden;
+  background: var(--asphalt); color: #fff;
+  isolation: isolate;
+}
+.media-band-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 38%;
+  z-index: 0;
+}
+/* Veil: dark on the text side, fading to a warm orange wash on the far
+   edge so the brand colour reads through the photograph. */
+.media-band-veil {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(105deg,
+      rgba(8, 8, 8, .94) 0%,
+      rgba(8, 8, 8, .82) 34%,
+      rgba(11, 11, 11, .42) 72%,
+      rgba(217, 67, 15, .30) 100%);
+}
+html[dir="rtl"] .media-band-veil { background:
+  linear-gradient(255deg,
+    rgba(8, 8, 8, .94) 0%,
+    rgba(8, 8, 8, .82) 34%,
+    rgba(11, 11, 11, .42) 72%,
+    rgba(217, 67, 15, .30) 100%);
+}
+.media-band-inner {
+  position: relative; z-index: 2;
+  padding-block: clamp(76px, 12vw, 132px);
+  max-width: 620px;
+}
+.media-band .eyebrow { color: #ff7a4d; }
+.media-band-title {
+  font-size: clamp(1.9rem, 5.4vw, 3rem);
+  font-weight: 900; line-height: 1.08; letter-spacing: -.02em;
+  text-wrap: balance; margin-bottom: 16px;
+}
+.media-band-title em { font-style: italic; color: #ff7a4d; }
+.media-band-sub {
+  font-size: 1.04rem; line-height: 1.6; color: #e7e7e7;
+  max-width: 46ch; margin-bottom: 26px;
+}
+/* Proof stats riding under the claim — operator specifics, not a hero-metric template */
+.media-band-proof {
+  display: flex; flex-wrap: wrap; gap: 14px 34px;
+  margin-bottom: 30px;
+}
+.media-band-proof div { display: flex; flex-direction: column; gap: 2px; }
+.media-band-proof strong { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1; }
+.media-band-proof span { font-size: .82rem; font-weight: 600; color: #c9c9c9; }
+
+@media (min-width: 900px) {
+  .media-band-img { object-position: center 42%; }
+}
+/* Phones: content is full-width, so back every line with a uniform dark
+   wash instead of the horizontal fade — keeps the muted stat labels ≥4.5:1. */
+@media (max-width: 759px) {
+  .media-band-veil,
+  html[dir="rtl"] .media-band-veil {
+    background: linear-gradient(to top,
+      rgba(8, 8, 8, .95) 0%,
+      rgba(8, 8, 8, .80) 55%,
+      rgba(8, 8, 8, .66) 100%);
+  }
+}
+
+/* Capabilities photo duo — "we do more than drive": ports and
+   warehouses shown, not just claimed. Caption gradient guarantees
+   white-on-photo legibility regardless of the image behind it. */
+.proof-duo {
+  display: grid; gap: 16px; margin-top: 34px;
+  grid-template-columns: 1fr;
+}
+.proof-tile {
+  position: relative; overflow: hidden;
+  border-radius: 16px; aspect-ratio: 16 / 11;
+  background: var(--sand-deep);
+}
+.proof-tile img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .7s cubic-bezier(.2, .7, .2, 1);
+}
+.proof-tile:hover img, .proof-tile:focus-within img { transform: scale(1.05); }
+.proof-tile figcaption {
+  position: absolute; inset-inline: 0; bottom: 0;
+  padding: 56px 22px 20px; text-align: start;
+  background: linear-gradient(to top, rgba(8, 8, 8, .92) 12%, rgba(8, 8, 8, 0) 100%);
+}
+.proof-tile .proof-tag {
+  display: inline-block; font-weight: 800; font-size: .72rem;
+  letter-spacing: .16em; text-transform: uppercase; color: #ff7a4d;
+  margin-bottom: 6px;
+}
+html[lang="ar"] .proof-tile .proof-tag { letter-spacing: 0; }
+.proof-tile h3 { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.proof-tile p { font-size: .9rem; color: #d8d8d8; max-width: 38ch; }
+@media (min-width: 760px) {
+  .proof-duo { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proof-tile:hover img, .proof-tile:focus-within img { transform: none; }
 }

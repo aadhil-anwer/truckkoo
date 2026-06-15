@@ -1,5 +1,5 @@
 /* Truckkoo service worker — offline support + installability */
-const CACHE = "truckkoo-v1";
+const CACHE = "truckkoo-v2";
 const CORE = [
   "./",
   "./index.html",
@@ -13,6 +13,9 @@ const CORE = [
   "./images/logo-mark.png",
   "./images/icon-192.png",
   "./images/icon-512.png",
+  "./images/road-desert.jpg",
+  "./images/port-containers.jpg",
+  "./images/warehouse.jpg",
   "./manifest.webmanifest"
 ];
 
