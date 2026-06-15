@@ -5,13 +5,9 @@
 // Get it at analytics.google.com → Admin → Data streams → your web stream.
 // Until a real ID is set here, tracking is silently disabled (no errors).
 var GA_MEASUREMENT_ID = "G-XSYBWP2WL4";
-var NOTICE_KEY = "truckkoo-cookie-notice"; // stored value: "seen"
 
 function gaEnabled() {
   return GA_MEASUREMENT_ID && GA_MEASUREMENT_ID.indexOf("G-XXXX") !== 0;
-}
-function noticeSeen() {
-  try { return localStorage.getItem(NOTICE_KEY) === "seen"; } catch (e) { return false; }
 }
 
 (function () {
@@ -19,9 +15,10 @@ function noticeSeen() {
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { window.dataLayer.push(arguments); };
 
-  // Consent Mode v2 — analytics on (first-party measurement only), advertising
-  // off. Google Signals / ads personalisation are disabled, so no opt-in gate
-  // is needed — just a short notice.
+  // Consent Mode v2 — first-party measurement only. Google Signals, ads
+  // personalisation and remarketing are off, so advertising signals stay
+  // denied and no consent banner is required (transparency is provided via
+  // the Privacy Policy linked in the footer).
   gtag("consent", "default", {
     ad_storage: "denied",
     ad_user_data: "denied",
@@ -40,43 +37,6 @@ function noticeSeen() {
   s.async = true;
   s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
   document.head.appendChild(s);
-})();
-
-// Cookie notice (injected on every page; shown once until acknowledged).
-(function () {
-  if (!gaEnabled() || noticeSeen()) return;
-
-  function build() {
-    var bar = document.createElement("div");
-    bar.className = "cookie";
-    bar.setAttribute("role", "dialog");
-    bar.setAttribute("aria-label", "Cookie notice");
-    bar.innerHTML =
-      '<div class="cookie-inner">' +
-        '<p class="cookie-text">' +
-          '<span class="en">We use cookies for basic traffic analytics to improve our service. ' +
-            'See our <a href="privacy.html">Privacy Policy</a>.</span>' +
-          '<span class="ar">نستخدم ملفات تعريف الارتباط لتحليلات بسيطة للزيارات بهدف تحسين خدمتنا. ' +
-            'اطّلع على <a href="privacy.html">سياسة الخصوصية</a>.</span>' +
-        '</p>' +
-        '<div class="cookie-actions">' +
-          '<button type="button" class="cookie-btn cookie-accept" id="cookieOk">' +
-            '<span class="en">Got it</span><span class="ar">حسناً</span></button>' +
-        '</div>' +
-      '</div>';
-    document.body.appendChild(bar);
-    requestAnimationFrame(function () { bar.classList.add("show"); });
-
-    bar.querySelector("#cookieOk").addEventListener("click", function () {
-      try { localStorage.setItem(NOTICE_KEY, "seen"); } catch (e) {}
-      bar.classList.remove("show");
-      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 360);
-      window.dispatchEvent(new Event("truckkoo:consent")); // let other UI proceed
-    });
-  }
-
-  if (document.body) build();
-  else document.addEventListener("DOMContentLoaded", build);
 })();
 // =============================================================================
 
@@ -355,39 +315,18 @@ if ("serviceWorker" in navigator) {
     setTimeout(reveal, 6500);
   }
 
-  // Don't stack two bottom banners: wait until the cookie notice is dismissed
-  // before arming the install prompt (consentReady() is true when there's
-  // nothing to wait for).
-  var armed = false;
-  function consentReady() {
-    if (typeof gaEnabled === "function" && !gaEnabled()) return true;
-    return noticeSeen();
-  }
-  var consentOk = consentReady();
-  if (!consentOk) {
-    window.addEventListener("truckkoo:consent", function () {
-      consentOk = true;
-      maybeArm();
-    }, { once: true });
-  }
-  function maybeArm() {
-    if (armed || !consentOk || !eligible) return;
-    armed = true;
-    armReveal();
-  }
-
   if (isIOS) {
     // iOS Safari has no install prompt API — guide the user instead.
     banner.classList.add("is-ios");
     eligible = true;
-    maybeArm();
+    armReveal();
   } else {
     // Android / desktop Chrome: capture the native prompt and trigger it on tap.
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
       deferredPrompt = e;
       eligible = true;
-      maybeArm();
+      armReveal();
     });
   }
 
