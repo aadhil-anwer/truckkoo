@@ -5,13 +5,13 @@
 // Get it at analytics.google.com → Admin → Data streams → your web stream.
 // Until a real ID is set here, tracking is silently disabled (no errors).
 var GA_MEASUREMENT_ID = "G-XSYBWP2WL4";
-var CONSENT_KEY = "truckkoo-consent"; // stored value: "granted" | "denied"
+var NOTICE_KEY = "truckkoo-cookie-notice"; // stored value: "seen"
 
 function gaEnabled() {
   return GA_MEASUREMENT_ID && GA_MEASUREMENT_ID.indexOf("G-XXXX") !== 0;
 }
-function storedConsent() {
-  try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+function noticeSeen() {
+  try { return localStorage.getItem(NOTICE_KEY) === "seen"; } catch (e) { return false; }
 }
 
 (function () {
@@ -19,23 +19,22 @@ function storedConsent() {
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { window.dataLayer.push(arguments); };
 
-  // Consent Mode v2 — deny everything by default until the visitor decides.
-  // (If they accepted on a previous visit, start granted.)
-  var granted = storedConsent() === "granted";
+  // Consent Mode v2 — analytics on (first-party measurement only), advertising
+  // off. Google Signals / ads personalisation are disabled, so no opt-in gate
+  // is needed — just a short notice.
   gtag("consent", "default", {
-    ad_storage: granted ? "granted" : "denied",
-    ad_user_data: granted ? "granted" : "denied",
-    ad_personalization: granted ? "granted" : "denied",
-    analytics_storage: granted ? "granted" : "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "granted",
     functionality_storage: "granted",
-    security_storage: "granted",
-    wait_for_update: 500
+    security_storage: "granted"
   });
-  gtag("set", "ads_data_redaction", !granted);
+  gtag("set", "ads_data_redaction", true);
   gtag("set", "url_passthrough", true);
 
   gtag("js", new Date());
-  gtag("config", GA_MEASUREMENT_ID);
+  gtag("config", GA_MEASUREMENT_ID, { anonymize_ip: true });
 
   var s = document.createElement("script");
   s.async = true;
@@ -43,54 +42,37 @@ function storedConsent() {
   document.head.appendChild(s);
 })();
 
-// Cookie-consent banner (injected on every page; shown until a choice is made).
+// Cookie notice (injected on every page; shown once until acknowledged).
 (function () {
-  if (!gaEnabled()) return;
-  var prev = storedConsent();
-  if (prev === "granted" || prev === "denied") return; // already chosen
-
-  function apply(choice) {
-    try { localStorage.setItem(CONSENT_KEY, choice); } catch (e) {}
-    var v = choice === "granted" ? "granted" : "denied";
-    if (typeof window.gtag === "function") {
-      window.gtag("consent", "update", {
-        ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v
-      });
-      window.gtag("set", "ads_data_redaction", choice !== "granted");
-    }
-    window.dispatchEvent(new Event("truckkoo:consent")); // let other UI proceed
-  }
+  if (!gaEnabled() || noticeSeen()) return;
 
   function build() {
     var bar = document.createElement("div");
     bar.className = "cookie";
     bar.setAttribute("role", "dialog");
-    bar.setAttribute("aria-label", "Cookie consent");
+    bar.setAttribute("aria-label", "Cookie notice");
     bar.innerHTML =
       '<div class="cookie-inner">' +
         '<p class="cookie-text">' +
-          '<span class="en">We use cookies and Google Analytics to measure traffic and improve our service. ' +
-            'You can accept or decline. See our <a href="privacy.html">Privacy Policy</a>.</span>' +
-          '<span class="ar">نستخدم ملفات تعريف الارتباط وتحليلات جوجل لقياس الزيارات وتحسين خدمتنا. ' +
-            'يمكنك القبول أو الرفض. اطّلع على <a href="privacy.html">سياسة الخصوصية</a>.</span>' +
+          '<span class="en">We use cookies for basic traffic analytics to improve our service. ' +
+            'See our <a href="privacy.html">Privacy Policy</a>.</span>' +
+          '<span class="ar">نستخدم ملفات تعريف الارتباط لتحليلات بسيطة للزيارات بهدف تحسين خدمتنا. ' +
+            'اطّلع على <a href="privacy.html">سياسة الخصوصية</a>.</span>' +
         '</p>' +
         '<div class="cookie-actions">' +
-          '<button type="button" class="cookie-btn cookie-decline" id="cookieDecline">' +
-            '<span class="en">Decline</span><span class="ar">رفض</span></button>' +
-          '<button type="button" class="cookie-btn cookie-accept" id="cookieAccept">' +
-            '<span class="en">Accept</span><span class="ar">قبول</span></button>' +
+          '<button type="button" class="cookie-btn cookie-accept" id="cookieOk">' +
+            '<span class="en">Got it</span><span class="ar">حسناً</span></button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function () { bar.classList.add("show"); });
 
-    function close(choice) {
-      apply(choice);
+    bar.querySelector("#cookieOk").addEventListener("click", function () {
+      try { localStorage.setItem(NOTICE_KEY, "seen"); } catch (e) {}
       bar.classList.remove("show");
       setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 360);
-    }
-    bar.querySelector("#cookieAccept").addEventListener("click", function () { close("granted"); });
-    bar.querySelector("#cookieDecline").addEventListener("click", function () { close("denied"); });
+      window.dispatchEvent(new Event("truckkoo:consent")); // let other UI proceed
+    });
   }
 
   if (document.body) build();
@@ -373,14 +355,13 @@ if ("serviceWorker" in navigator) {
     setTimeout(reveal, 6500);
   }
 
-  // Don't stack two bottom banners: wait until the cookie-consent choice is
-  // made before arming the install prompt (consentReady() is true when there's
+  // Don't stack two bottom banners: wait until the cookie notice is dismissed
+  // before arming the install prompt (consentReady() is true when there's
   // nothing to wait for).
   var armed = false;
   function consentReady() {
     if (typeof gaEnabled === "function" && !gaEnabled()) return true;
-    var c = storedConsent();
-    return c === "granted" || c === "denied";
+    return noticeSeen();
   }
   var consentOk = consentReady();
   if (!consentOk) {
