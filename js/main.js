@@ -5,17 +5,96 @@
 // Get it at analytics.google.com → Admin → Data streams → your web stream.
 // Until a real ID is set here, tracking is silently disabled (no errors).
 var GA_MEASUREMENT_ID = "G-XSYBWP2WL4";
+var CONSENT_KEY = "truckkoo-consent"; // stored value: "granted" | "denied"
+
+function gaEnabled() {
+  return GA_MEASUREMENT_ID && GA_MEASUREMENT_ID.indexOf("G-XXXX") !== 0;
+}
+function storedConsent() {
+  try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+}
 
 (function () {
-  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf("G-XXXX") === 0) return;
+  if (!gaEnabled()) return;
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { window.dataLayer.push(arguments); };
+
+  // Consent Mode v2 — deny everything by default until the visitor decides.
+  // (If they accepted on a previous visit, start granted.)
+  var granted = storedConsent() === "granted";
+  gtag("consent", "default", {
+    ad_storage: granted ? "granted" : "denied",
+    ad_user_data: granted ? "granted" : "denied",
+    ad_personalization: granted ? "granted" : "denied",
+    analytics_storage: granted ? "granted" : "denied",
+    functionality_storage: "granted",
+    security_storage: "granted",
+    wait_for_update: 500
+  });
+  gtag("set", "ads_data_redaction", !granted);
+  gtag("set", "url_passthrough", true);
+
   gtag("js", new Date());
   gtag("config", GA_MEASUREMENT_ID);
+
   var s = document.createElement("script");
   s.async = true;
   s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
   document.head.appendChild(s);
+})();
+
+// Cookie-consent banner (injected on every page; shown until a choice is made).
+(function () {
+  if (!gaEnabled()) return;
+  var prev = storedConsent();
+  if (prev === "granted" || prev === "denied") return; // already chosen
+
+  function apply(choice) {
+    try { localStorage.setItem(CONSENT_KEY, choice); } catch (e) {}
+    var v = choice === "granted" ? "granted" : "denied";
+    if (typeof window.gtag === "function") {
+      window.gtag("consent", "update", {
+        ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v
+      });
+      window.gtag("set", "ads_data_redaction", choice !== "granted");
+    }
+    window.dispatchEvent(new Event("truckkoo:consent")); // let other UI proceed
+  }
+
+  function build() {
+    var bar = document.createElement("div");
+    bar.className = "cookie";
+    bar.setAttribute("role", "dialog");
+    bar.setAttribute("aria-label", "Cookie consent");
+    bar.innerHTML =
+      '<div class="cookie-inner">' +
+        '<p class="cookie-text">' +
+          '<span class="en">We use cookies and Google Analytics to measure traffic and improve our service. ' +
+            'You can accept or decline. See our <a href="privacy.html">Privacy Policy</a>.</span>' +
+          '<span class="ar">نستخدم ملفات تعريف الارتباط وتحليلات جوجل لقياس الزيارات وتحسين خدمتنا. ' +
+            'يمكنك القبول أو الرفض. اطّلع على <a href="privacy.html">سياسة الخصوصية</a>.</span>' +
+        '</p>' +
+        '<div class="cookie-actions">' +
+          '<button type="button" class="cookie-btn cookie-decline" id="cookieDecline">' +
+            '<span class="en">Decline</span><span class="ar">رفض</span></button>' +
+          '<button type="button" class="cookie-btn cookie-accept" id="cookieAccept">' +
+            '<span class="en">Accept</span><span class="ar">قبول</span></button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(bar);
+    requestAnimationFrame(function () { bar.classList.add("show"); });
+
+    function close(choice) {
+      apply(choice);
+      bar.classList.remove("show");
+      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 360);
+    }
+    bar.querySelector("#cookieAccept").addEventListener("click", function () { close("granted"); });
+    bar.querySelector("#cookieDecline").addEventListener("click", function () { close("denied"); });
+  }
+
+  if (document.body) build();
+  else document.addEventListener("DOMContentLoaded", build);
 })();
 // =============================================================================
 
@@ -294,18 +373,40 @@ if ("serviceWorker" in navigator) {
     setTimeout(reveal, 6500);
   }
 
+  // Don't stack two bottom banners: wait until the cookie-consent choice is
+  // made before arming the install prompt (consentReady() is true when there's
+  // nothing to wait for).
+  var armed = false;
+  function consentReady() {
+    if (typeof gaEnabled === "function" && !gaEnabled()) return true;
+    var c = storedConsent();
+    return c === "granted" || c === "denied";
+  }
+  var consentOk = consentReady();
+  if (!consentOk) {
+    window.addEventListener("truckkoo:consent", function () {
+      consentOk = true;
+      maybeArm();
+    }, { once: true });
+  }
+  function maybeArm() {
+    if (armed || !consentOk || !eligible) return;
+    armed = true;
+    armReveal();
+  }
+
   if (isIOS) {
     // iOS Safari has no install prompt API — guide the user instead.
     banner.classList.add("is-ios");
     eligible = true;
-    armReveal();
+    maybeArm();
   } else {
     // Android / desktop Chrome: capture the native prompt and trigger it on tap.
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
       deferredPrompt = e;
       eligible = true;
-      armReveal();
+      maybeArm();
     });
   }
 
