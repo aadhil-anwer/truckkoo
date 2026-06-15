@@ -1,5 +1,24 @@
 // Truckkoo — language toggle, scroll reveal, WhatsApp quote form
 
+// ===== Google Analytics 4 =====================================================
+// Paste your Measurement ID below (looks like "G-ABC123XYZ").
+// Get it at analytics.google.com → Admin → Data streams → your web stream.
+// Until a real ID is set here, tracking is silently disabled (no errors).
+var GA_MEASUREMENT_ID = "G-XSYBWP2WL4";
+
+(function () {
+  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf("G-XXXX") === 0) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  gtag("js", new Date());
+  gtag("config", GA_MEASUREMENT_ID);
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+  document.head.appendChild(s);
+})();
+// =============================================================================
+
 (function () {
   var html = document.documentElement;
   var WA_NUMBER = "96875172824";
@@ -105,6 +124,13 @@
   // Quote form -> prefilled WhatsApp message
   var form = document.getElementById("quoteForm");
   if (form) {
+    // Funnel step: visitor started filling the quote form
+    var formStarted = false;
+    form.addEventListener("focusin", function () {
+      if (formStarted) return;
+      formStarted = true;
+      track("quote_form_start");
+    });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var from = document.getElementById("qfFrom").value.trim();
@@ -153,6 +179,25 @@
                : "page_button";
     track("whatsapp_click", { source: source, lang: html.lang });
   });
+
+  // Analytics: scroll-depth milestones — how far down the page visitors get
+  var depthMarks = [25, 50, 75, 100];
+  var depthHit = {};
+  function onDepthScroll() {
+    var doc = document.documentElement;
+    var scrollable = doc.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    var pct = (window.pageYOffset / scrollable) * 100;
+    for (var i = 0; i < depthMarks.length; i++) {
+      var m = depthMarks[i];
+      if (pct >= m && !depthHit[m]) {
+        depthHit[m] = true;
+        track("scroll_depth", { percent: m });
+      }
+    }
+    if (depthHit[100]) window.removeEventListener("scroll", onDepthScroll);
+  }
+  window.addEventListener("scroll", onDepthScroll, { passive: true });
 
   // Open a service accordion when linked to directly (e.g. services.html#customs)
   function openHashAccordion() {
