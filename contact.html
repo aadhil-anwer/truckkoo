@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Truckkoo Trucking &amp; Logistics</title>
+<meta name="description" content="Contact Truckkoo for local trucking, GCC transportation, customs clearance or complete logistics management. WhatsApp +968 7517 2824 — replies in minutes, 7 days a week.">
+<meta property="og:title" content="Contact Us — Truckkoo">
+<meta property="og:description" content="Request a customised transportation quote. WhatsApp +968 7517 2824.">
+<meta property="og:image" content="images/logo.jpg">
+<meta name="theme-color" content="#13100D">
+<link rel="icon" href="images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,800;0,900;1,800;1,900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head>
+<body>
+<a class="skip-link en" href="#main">Skip to content</a>
+<a class="skip-link ar" href="#main">تخطّ إلى المحتوى</a>
+
+<!-- ===== Header ===== -->
+<header class="site-header" id="top">
+  <a class="brand" href="index.html" aria-label="Truckkoo">
+    <img class="brand-logo" src="images/logo-word.png" alt="Truckkoo" width="710" height="125">
+  </a>
+  <nav class="main-nav" id="mainNav" aria-label="Main">
+    <a href="index.html"><span class="en">Home</span><span class="ar">الرئيسية</span></a>
+    <a href="services.html"><span class="en">Services</span><span class="ar">خدماتنا</span></a>
+    <a href="industries.html"><span class="en">Industries</span><span class="ar">القطاعات</span></a>
+    <a href="about.html"><span class="en">About</span><span class="ar">من نحن</span></a>
+    <a href="contact.html" class="active"><span class="en">Contact</span><span class="ar">اتصل بنا</span></a>
+  </nav>
+  <div class="header-actions">
+    <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+      <span class="en">عربي</span><span class="ar">EN</span>
+    </button>
+    <a class="btn btn-wa btn-header" href="https://wa.me/96875172824?text=Hi%20Truckkoo%2C%20I%20need%20a%20truck." target="_blank" rel="noopener">
+      <svg class="ico-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
+      <span class="en">WhatsApp</span><span class="ar">واتساب</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===== Page hero + quote form ===== -->
+<section class="hero page-hero">
+  <div class="container hero-inner" style="min-height:auto;padding-block:56px 24px">
+    <p class="hero-kicker reveal">
+      <span class="en">Contact Us</span><span class="ar">اتصل بنا</span>
+    </p>
+    <h1 class="hero-title reveal">
+      <span class="en">Let's move your cargo with <em>confidence</em>.</span>
+      <span class="ar">لننقل بضاعتك <em>بثقة</em>.</span>
+    </h1>
+    <p class="hero-sub reveal">
+      <span class="en">Whether you need local trucking within Oman, GCC transportation, customs clearance or complete logistics management — tell us your requirement and receive a customised quote in minutes.</span>
+      <span class="ar">سواء احتجت نقلاً داخل عُمان، أو نقلاً خليجياً، أو تخليصاً جمركياً، أو إدارة لوجستية كاملة — أخبرنا بمتطلبك واحصل على عرض سعر مخصّص خلال دقائق.</span>
+    </p>
+    <div class="hero-cta reveal">
+      <form class="quote-form" id="quoteForm" novalidate>
+        <div class="qf-grid">
+          <div class="qf-field">
+            <label for="qfFrom"><span class="en">Pickup from</span><span class="ar">من (موقع التحميل)</span></label>
+            <input type="text" id="qfFrom" name="from" required autocomplete="off" list="cityList"
+                   data-ph-en="e.g. Muscat" data-ph-ar="مثال: مسقط">
+          </div>
+          <div class="qf-field">
+            <label for="qfTo"><span class="en">Deliver to</span><span class="ar">إلى (موقع التسليم)</span></label>
+            <input type="text" id="qfTo" name="to" required autocomplete="off" list="cityList"
+                   data-ph-en="e.g. Dubai" data-ph-ar="مثال: دبي">
+          </div>
+          <div class="qf-field">
+            <label for="qfGoods"><span class="en">Type of goods</span><span class="ar">نوع البضاعة</span></label>
+            <input type="text" id="qfGoods" name="goods" required autocomplete="off"
+                   data-ph-en="e.g. furniture, building materials" data-ph-ar="مثال: أثاث، مواد بناء">
+          </div>
+          <div class="qf-field">
+            <label for="qfTruck"><span class="en">Truck type <small>(optional)</small></span><span class="ar">نوع الشاحنة <small>(اختياري)</small></span></label>
+            <select id="qfTruck" name="truck">
+              <option value="" data-en="Not sure — advise me" data-ar="غير متأكد — انصحوني"></option>
+              <option value="pickup" data-en="Small pickup (1 ton)" data-ar="بيك أب صغير (١ طن)"></option>
+              <option value="hiup" data-en="Hi-up (3 tons)" data-ar="هاي أب (٣ طن)"></option>
+              <option value="10t" data-en="10-ton truck" data-ar="شاحنة ١٠ طن"></option>
+              <option value="20t" data-en="20-ton trailer" data-ar="تريلة ٢٠ طن"></option>
+              <option value="40t" data-en="Trailer — up to 40 tons" data-ar="تريلة — حتى ٤٠ طن"></option>
+            </select>
+          </div>
+        </div>
+        <datalist id="cityList"></datalist>
+        <p class="qf-error" id="qfError" hidden>
+          <span class="en">Please fill in pickup, delivery and goods.</span>
+          <span class="ar">يرجى تعبئة موقع التحميل والتسليم ونوع البضاعة.</span>
+        </p>
+        <button type="submit" class="btn btn-wa btn-xl qf-submit">
+          <svg class="ico-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
+          <span class="en">Request a quote on WhatsApp</span><span class="ar">اطلب عرض سعر عبر واتساب</span>
+        </button>
+      </form>
+      <p class="hero-note">
+        <span class="en">Replies in minutes · 7 days a week</span>
+        <span class="ar">نرد خلال دقائق · طوال أيام الأسبوع</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact details ===== -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow reveal"><span class="en">Reach Our Team</span><span class="ar">تواصل مع فريقنا</span></p>
+    <h2 class="section-title reveal">
+      <span class="en">However you prefer to get in touch.</span>
+      <span class="ar">بالطريقة التي تفضّلها للتواصل.</span>
+    </h2>
+    <div class="contact-cards">
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+        <h3><span class="en">WhatsApp</span><span class="ar">واتساب</span></h3>
+        <p><span class="en">Fastest way to a quote — replies in minutes.</span><span class="ar">أسرع طريقة للحصول على سعر — نرد خلال دقائق.</span></p>
+        <a href="https://wa.me/96875172824?text=Hi%20Truckkoo%2C%20I%20need%20a%20logistics%20quote." target="_blank" rel="noopener" dir="ltr">+968 7517 2824</a>
+      </div>
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5l4-1 2 5-2 1a12 12 0 0 0 6 6l1-2 5 2-1 4a16 16 0 0 1-15-15z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+        <h3><span class="en">Phone</span><span class="ar">هاتف</span></h3>
+        <p><span class="en">Prefer to talk? Call us directly.</span><span class="ar">تفضّل المكالمة؟ اتصل بنا مباشرة.</span></p>
+        <a href="tel:+96875172824" dir="ltr">+968 7517 2824</a>
+      </div>
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+        <h3><span class="en">Email</span><span class="ar">البريد الإلكتروني</span></h3>
+        <p><span class="en">For detailed enquiries and documents.</span><span class="ar">للاستفسارات التفصيلية والمستندات.</span></p>
+        <a href="mailto:hello@truckkoo.com">hello@truckkoo.com</a>
+      </div>
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+        <h3><span class="en">Location</span><span class="ar">الموقع</span></h3>
+        <p><span class="en">Muscat, Sultanate of Oman</span><span class="ar">مسقط، سلطنة عُمان</span></p>
+        <span class="footer-plain" style="color:var(--ink-soft)"><span class="en">Serving all of Oman &amp; the GCC</span><span class="ar">نخدم كل عُمان والخليج</span></span>
+      </div>
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+        <h3><span class="en">Hours</span><span class="ar">ساعات العمل</span></h3>
+        <p><span class="en">Open 7 days a week, including public holidays.</span><span class="ar">نعمل طوال أيام الأسبوع، بما في ذلك العطل الرسمية.</span></p>
+      </div>
+      <div class="contact-card reveal">
+        <span class="info-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1.3" fill="currentColor"/></svg></span>
+        <h3><span class="en">Instagram</span><span class="ar">إنستغرام</span></h3>
+        <p><span class="en">Follow our latest moves.</span><span class="ar">تابع آخر رحلاتنا.</span></p>
+        <a href="https://instagram.com/truckkoo" target="_blank" rel="noopener">@truckkoo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section section-dark faq" id="faq">
+  <div class="container">
+    <p class="eyebrow reveal"><span class="en">FAQ</span><span class="ar">الأسئلة الشائعة</span></p>
+    <h2 class="section-title reveal">
+      <span class="en">Questions, answered.</span>
+      <span class="ar">أسئلتكم، وأجوبتها.</span>
+    </h2>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary><span class="en">Do you provide transportation throughout Oman?</span><span class="ar">هل تقدّمون النقل في جميع أنحاء عُمان؟</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <p><span class="en">Yes. We provide transportation services across all major cities, industrial zones and regions within Oman.</span><span class="ar">نعم. نوفّر خدمات النقل في جميع المدن الرئيسية والمناطق الصناعية وكافة مناطق السلطنة.</span></p>
+      </details>
+      <details class="faq-item reveal">
+        <summary><span class="en">Do you transport cargo to all GCC countries?</span><span class="ar">هل تنقلون البضائع إلى جميع دول الخليج؟</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <p><span class="en">Yes. We offer transportation services to the UAE, Saudi Arabia, Qatar, Kuwait and Bahrain.</span><span class="ar">نعم. نقدّم خدمات النقل إلى الإمارات والسعودية وقطر والكويت والبحرين.</span></p>
+      </details>
+      <details class="faq-item reveal">
+        <summary><span class="en">Can you handle customs clearance?</span><span class="ar">هل تتولون التخليص الجمركي؟</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <p><span class="en">Absolutely. Our customs specialists manage import, export and transit documentation and clearance processes.</span><span class="ar">بالتأكيد. يتولى مختصو التخليص لدينا أوراق وإجراءات الاستيراد والتصدير والعبور.</span></p>
+      </details>
+      <details class="faq-item reveal">
+        <summary><span class="en">Do you provide both partial and full truck services?</span><span class="ar">هل توفّرون الحمولة الكاملة والجزئية؟</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <p><span class="en">Yes. We offer both Full Truck Load (FTL) and Less Than Truck Load (LTL) transportation solutions.</span><span class="ar">نعم. نوفّر حلول الحمولة الكاملة (FTL) والحمولة الجزئية (LTL).</span></p>
+      </details>
+      <details class="faq-item reveal">
+        <summary><span class="en">Can you transport heavy machinery?</span><span class="ar">هل يمكنكم نقل المعدات الثقيلة؟</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <p><span class="en">Yes. We specialise in project cargo and heavy equipment transportation with appropriate planning and permits.</span><span class="ar">نعم. نتخصص في نقل شحنات المشاريع والمعدات الثقيلة مع التخطيط والتصاريح المناسبة.</span></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-col-brand">
+        <a class="brand brand-footer" href="index.html">
+          <img class="brand-logo brand-logo-footer" src="images/logo-mark.png" alt="Truckkoo — Driven. Delivered. Trusted." width="710" height="168">
+        </a>
+        <p class="footer-slogan">
+          <span class="en">Connecting Oman to the GCC.</span>
+          <span class="ar">نربط عُمان بدول الخليج.</span>
+        </p>
+        <p class="footer-desc">
+          <span class="en">Reliable trucking, customs clearance and door-to-door logistics across Oman and all GCC countries. No brokers, no delays.</span>
+          <span class="ar">نقل موثوق وتخليص جمركي وخدمات من الباب إلى الباب في عُمان وجميع دول الخليج. بدون وسطاء، بدون تأخير.</span>
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4><span class="en">Company</span><span class="ar">الشركة</span></h4>
+        <ul>
+          <li><a href="about.html"><span class="en">About Us</span><span class="ar">من نحن</span></a></li>
+          <li><a href="about.html#vision"><span class="en">Vision &amp; Mission</span><span class="ar">الرؤية والرسالة</span></a></li>
+          <li><a href="about.html#why"><span class="en">Why Choose Us</span><span class="ar">لماذا تختارنا</span></a></li>
+          <li><a href="contact.html#faq"><span class="en">FAQ</span><span class="ar">الأسئلة الشائعة</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span class="en">Services</span><span class="ar">الخدمات</span></h4>
+        <ul>
+          <li><a href="services.html#local"><span class="en">Local Trucking</span><span class="ar">النقل الداخلي</span></a></li>
+          <li><a href="services.html#gcc"><span class="en">GCC Road Freight</span><span class="ar">الشحن الخليجي</span></a></li>
+          <li><a href="services.html#customs"><span class="en">Customs Clearance</span><span class="ar">التخليص الجمركي</span></a></li>
+          <li><a href="services.html#project"><span class="en">Project Cargo</span><span class="ar">شحن المشاريع</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span class="en">Contact</span><span class="ar">تواصل معنا</span></h4>
+        <ul>
+          <li><a href="https://wa.me/96875172824" target="_blank" rel="noopener"><span class="en">WhatsApp:</span><span class="ar">واتساب:</span> <span dir="ltr">+968 7517 2824</span></a></li>
+          <li><a href="tel:+96875172824"><span class="en">Phone:</span><span class="ar">هاتف:</span> <span dir="ltr">+968 7517 2824</span></a></li>
+          <li><a href="https://instagram.com/truckkoo" target="_blank" rel="noopener"><span class="en">Instagram</span><span class="ar">إنستغرام</span></a></li>
+          <li><span class="footer-plain"><span class="en">Muscat, Sultanate of Oman</span><span class="ar">مسقط، سلطنة عُمان</span></span></li>
+          <li><span class="footer-plain"><span class="en">Open 7 days a week</span><span class="ar">نعمل طوال أيام الأسبوع</span></span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Truckkoo. <span class="en">All rights reserved.</span><span class="ar">جميع الحقوق محفوظة.</span></p>
+      <p class="footer-tag"><span class="en">Driven. Delivered. Trusted.</span><span class="ar">قيادة. توصيل. ثقة.</span></p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/96875172824?text=Hi%20Truckkoo%2C%20I%20need%20a%20truck." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z" fill="currentColor"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>

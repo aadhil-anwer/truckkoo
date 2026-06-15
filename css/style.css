@@ -25,7 +25,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 
 body {
   font-family: var(--font-latin);
@@ -418,8 +418,11 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
   color: var(--orange); margin-bottom: 16px;
 }
-.footer-col ul { display: grid; gap: 10px; }
+.footer-col ul { display: grid; gap: 2px; }
 .footer-col ul a, .footer-plain { font-size: .92rem; color: #c6c6c6; }
+.footer-col ul a, .footer-col ul .footer-plain {
+  display: inline-flex; align-items: center; min-height: 40px; padding-block: 6px;
+}
 .footer-col ul a { transition: color .18s ease; }
 .footer-col ul a:hover { color: var(--orange); }
 .footer-col-brand .brand { margin-bottom: 12px; }
@@ -455,4 +458,268 @@ html[dir="rtl"] .strip-track { animation-name: marquee-rtl; }
   .why-list { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
   .why-list li:last-child { grid-column: 1 / -1; justify-self: start; min-width: 48%; }
   .site-footer { padding-bottom: 56px; }
+}
+
+/* ============================================================
+   Multi-page additions — inner page heroes, service detail
+   blocks, coverage chips, destination cards, industries grid.
+   Reuses existing tokens (.section, .eyebrow, .truck-card …).
+   ============================================================ */
+
+/* ============================================================
+   Accessibility & touch ergonomics
+   - Fitts's Law: tap targets ≥ 44px
+   - Keyboard: visible focus ring (WCAG 2.4.7)
+   - Skip link for screen-reader / keyboard users
+   ============================================================ */
+.skip-link {
+  position: absolute; inset-inline-start: 8px; top: -64px; z-index: 200;
+  background: var(--ink); color: #fff; padding: 11px 18px; border-radius: 8px;
+  font-weight: 800; transition: top .15s ease;
+}
+.skip-link:focus { top: 8px; }
+
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; border-radius: 6px; }
+.btn:focus-visible, .wa-float:focus-visible { outline-offset: 3px; }
+.section-dark :focus-visible, .section-orange :focus-visible { outline-color: #fff; }
+
+/* Thumb-friendly hit areas */
+.lang-toggle { min-height: 44px; }
+.nav-toggle { min-height: 44px; }
+.brand { padding-block: 7px; }
+.wa-float { min-width: 44px; min-height: 44px; }
+
+/* ---------- Active nav state ---------- */
+.main-nav a.active { color: var(--ink); }
+.main-nav a.active::after { transform: scaleX(1); }
+
+/* ---------- Mobile hamburger nav ---------- */
+.nav-toggle {
+  display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 42px; height: 40px; padding: 0 9px;
+  background: transparent; border: 1.5px solid #d4d4d4; border-radius: 8px;
+  cursor: pointer;
+}
+.nav-toggle span { display: block; height: 2px; background: var(--ink); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+.site-header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.site-header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.site-header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 899px) {
+  .main-nav {
+    display: none;
+    position: absolute; top: 100%; inset-inline: 0;
+    flex-direction: column; gap: 0;
+    background: #fff; border-bottom: 1px solid var(--line);
+    padding: 6px 18px 14px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .1);
+  }
+  .site-header.nav-open .main-nav { display: flex; }
+  .main-nav a { padding: 15px 4px; font-size: 1.04rem; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line); }
+  .main-nav a:last-child { border-bottom: none; }
+  .main-nav a::after { display: none; }
+  .main-nav a.active { color: var(--orange); }
+}
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }
+}
+
+/* ---------- Service accordion (services page) ---------- */
+.svc-accordion { margin-top: 26px; max-width: 800px; }
+.svc-acc {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow); margin-bottom: 12px;
+  transition: border-color .2s ease;
+}
+.svc-acc[open] { border-color: var(--orange); }
+.svc-acc summary {
+  display: flex; align-items: center; gap: 14px;
+  list-style: none; cursor: pointer; padding: 18px 20px;
+}
+.svc-acc summary::-webkit-details-marker { display: none; }
+.svc-acc-ico { flex: none; color: var(--orange); width: 28px; height: 28px; }
+.svc-acc-ico svg { width: 28px; height: 28px; }
+.svc-acc-t { flex: 1; min-width: 0; }
+.svc-acc-t strong { display: block; font-size: 1.02rem; font-weight: 800; line-height: 1.25; }
+.svc-acc-t small { font-size: .82rem; color: var(--ink-soft); font-weight: 600; }
+.svc-acc summary .faq-plus { flex: none; }
+.svc-acc[open] .faq-plus::after { transform: scaleY(0); }
+.svc-acc-body { padding: 0 20px 22px; }
+.svc-acc-body > p { color: var(--ink-soft); font-size: .95rem; margin-bottom: 14px; }
+.svc-acc-body .chip-grid { margin-top: 0; margin-bottom: 18px; }
+
+/* ---------- Inner-page hero ---------- */
+.page-hero {
+  position: relative;
+  background:
+    radial-gradient(900px 460px at 85% -20%, var(--orange-soft) 0%, transparent 60%),
+    var(--sand);
+  overflow: hidden;
+}
+.page-hero-inner {
+  position: relative; z-index: 2; text-align: center;
+  padding-block: 56px 30px;
+}
+.page-hero .hero-title { font-size: clamp(1.9rem, 6vw, 3.4rem); margin-bottom: 12px; }
+.page-hero .hero-sub { max-width: 640px; }
+
+/* ---------- Generic intro lead ---------- */
+.lead-center { margin-inline: auto; text-align: center; }
+
+/* ---------- Coverage / tag chips ---------- */
+.chip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.chip {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 999px;
+  padding: 9px 18px; font-weight: 700; font-size: .9rem; color: var(--ink);
+}
+.section-dark .chip { background: var(--asphalt-2); border-color: var(--asphalt-line); color: #fff; }
+.chip-orange { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+/* ---------- Info cards (feature grids) ---------- */
+.info-grid { display: grid; gap: 14px; margin-top: 30px; grid-template-columns: 1fr; }
+.info-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 26px 22px; box-shadow: var(--shadow);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.info-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+.section-dark .info-card { background: var(--asphalt-2); border-color: var(--asphalt-line); box-shadow: none; }
+.info-ico { color: var(--orange); width: 30px; height: 30px; margin-bottom: 14px; }
+.info-ico svg { width: 30px; height: 30px; }
+.info-card h3 { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; }
+.section-dark .info-card h3 { color: #fff; }
+.info-card p { font-size: .94rem; color: var(--ink-soft); }
+.section-dark .info-card p { color: #a3a3a3; }
+
+/* ---------- Service detail blocks ---------- */
+.svc-block { padding: 56px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 80px; }
+.svc-block:last-of-type { border-bottom: none; }
+.svc-head { max-width: 680px; }
+.svc-head h2 { font-size: clamp(1.5rem, 4.6vw, 2.1rem); font-weight: 900; letter-spacing: -.015em; margin-bottom: 6px; }
+.svc-head .svc-tagline { font-weight: 800; color: var(--orange); font-size: 1rem; margin-bottom: 12px; }
+.svc-head p { color: var(--ink-soft); font-size: 1.02rem; }
+.svc-cols {
+  display: grid; gap: 22px; margin-top: 28px; grid-template-columns: 1fr;
+}
+.col-list h4 {
+  font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 14px;
+}
+html[lang="ar"] .col-list h4 { letter-spacing: 0; }
+.list-check { display: grid; gap: 9px; }
+.list-check li { display: flex; align-items: flex-start; gap: 10px; font-size: .96rem; font-weight: 600; }
+.list-check li::before {
+  content: "✓"; flex: none; color: var(--orange); font-weight: 900;
+  font-size: .85rem; margin-top: 2px;
+}
+.list-plain { display: grid; gap: 8px; }
+.list-plain li { font-size: .95rem; color: var(--ink-soft); }
+
+/* ---------- GCC destination cards ---------- */
+.dest-grid { display: grid; gap: 14px; margin-top: 30px; grid-template-columns: 1fr; }
+.dest-card {
+  background: var(--asphalt-2); border: 1px solid var(--asphalt-line);
+  border-radius: var(--radius); padding: 24px 22px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.dest-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+.dest-card h3 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 12px;
+}
+.dest-flag { font-size: 1.3rem; line-height: 1; }
+.dest-card ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.dest-card li { font-size: .85rem; font-weight: 600; color: #cfcfcf; background: rgba(255,255,255,.05); border: 1px solid var(--asphalt-line); border-radius: 999px; padding: 5px 12px; }
+
+/* ---------- Vision / Mission ---------- */
+.vm-grid { display: grid; gap: 16px; margin-top: 30px; grid-template-columns: 1fr; }
+.vm-card {
+  border-radius: 16px; padding: 30px 26px;
+  border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow);
+  color: var(--ink);
+}
+.vm-card.vm-accent { background: var(--asphalt); color: #fff; border-color: var(--asphalt); }
+.vm-card .vm-label {
+  font-weight: 800; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 12px;
+}
+html[lang="ar"] .vm-card .vm-label { letter-spacing: 0; }
+.vm-card p { font-size: 1.06rem; line-height: 1.55; }
+
+/* ---------- Industries grid ---------- */
+.industry-grid { display: grid; gap: 14px; margin-top: 30px; grid-template-columns: 1fr; }
+.industry-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.industry-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+.industry-ico { color: var(--orange); width: 34px; height: 34px; margin-bottom: 14px; }
+.industry-ico svg { width: 34px; height: 34px; }
+.industry-card h3 { font-size: 1.06rem; font-weight: 800; margin-bottom: 6px; }
+.industry-card p { font-size: .92rem; color: var(--ink-soft); }
+
+/* ---------- Anchored sub-nav (services page) ---------- */
+.sub-nav {
+  position: sticky; top: 54px; z-index: 40;
+  background: rgba(255,255,255,.94); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.sub-nav ul { display: flex; gap: 6px; padding: 10px 16px; width: max-content; min-width: 100%; }
+.sub-nav a {
+  white-space: nowrap; font-weight: 700; font-size: .85rem; color: var(--ink-soft);
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+  transition: all .18s ease;
+}
+.sub-nav a:hover { color: var(--orange); border-color: var(--orange); }
+
+/* ---------- Contact details cards ---------- */
+.contact-cards { display: grid; gap: 14px; margin-top: 30px; grid-template-columns: 1fr; }
+.contact-card {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 24px 22px; text-align: start;
+}
+.contact-card .info-ico { margin-bottom: 12px; }
+.contact-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+.contact-card a, .contact-card p { font-size: .96rem; color: var(--ink-soft); }
+.contact-card a { font-weight: 700; color: var(--ink); display: inline-flex; align-items: center; min-height: 40px; }
+.contact-card a:hover { color: var(--orange); }
+
+/* ---------- Tablet & up (new components) ---------- */
+@media (min-width: 640px) {
+  .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .svc-cols { grid-template-columns: repeat(2, 1fr); }
+  .dest-grid { grid-template-columns: repeat(2, 1fr); }
+  .vm-grid { grid-template-columns: repeat(2, 1fr); }
+  .industry-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .info-grid { grid-template-columns: repeat(3, 1fr); }
+  .svc-cols { grid-template-columns: repeat(3, 1fr); }
+  .dest-grid { grid-template-columns: repeat(3, 1fr); }
+  .industry-grid { grid-template-columns: repeat(3, 1fr); }
+  .contact-cards { grid-template-columns: repeat(3, 1fr); }
+  .info-grid.info-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---------- Phone: tighter vertical rhythm (less scrolling) ---------- */
+@media (max-width: 639px) {
+  .section { padding: 60px 0; }
+  .hero-badges { padding: 26px 18px 44px; }
+  .contact-title { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  .svc-acc summary { padding: 16px 16px; }
+  .svc-acc-body { padding: 0 16px 18px; }
+}
+
+/* ---------- Very small phones (≤360px): keep header on one line ---------- */
+@media (max-width: 360px) {
+  .site-header { padding: 10px 12px; }
+  .header-actions { gap: 7px; }
+  .brand-logo { height: 26px; }
+  .lang-toggle { padding: 8px 11px; font-size: .88rem; }
+  .btn-header { padding: 10px 12px; }
+  .container { padding-inline: 16px; }
 }

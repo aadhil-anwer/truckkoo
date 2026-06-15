@@ -77,6 +77,31 @@
     setLang(html.lang === "ar" ? "en" : "ar");
   });
 
+  // Mobile hamburger nav
+  var header = document.querySelector(".site-header");
+  var navToggle = document.getElementById("navToggle");
+  var mainNav = document.getElementById("mainNav");
+  if (header && navToggle && mainNav) {
+    navToggle.addEventListener("click", function () {
+      var open = header.classList.toggle("nav-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    // Close after tapping a link
+    mainNav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) {
+        header.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+    // Close if resized up to desktop
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 900) {
+        header.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   // Quote form -> prefilled WhatsApp message
   var form = document.getElementById("quoteForm");
   if (form) {
@@ -128,6 +153,18 @@
                : "page_button";
     track("whatsapp_click", { source: source, lang: html.lang });
   });
+
+  // Open a service accordion when linked to directly (e.g. services.html#customs)
+  function openHashAccordion() {
+    if (!location.hash) return;
+    var el = document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === "DETAILS") {
+      el.open = true;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+  openHashAccordion();
+  window.addEventListener("hashchange", openHashAccordion);
 
   // Scroll reveal
   var revealed = document.querySelectorAll(".reveal");
